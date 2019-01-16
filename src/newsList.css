@@ -1,0 +1,43 @@
+
+.news {
+  width: 833px;
+  height: 250px;
+  background-size: 100%;
+  margin: 20px 0 0 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.image {
+  width: 375px;
+  height: 250px;
+}
+
+.newsInfo {
+  width: 458px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: white;
+}
+
+.title {
+  font-size: 35px;
+  text-align: left;
+  margin: 10px 0 10px 10px;
+}
+
+.detail {
+  font-size: 20px;
+  margin: 5px 0 5px 10px;
+}
+
+.newsListWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
