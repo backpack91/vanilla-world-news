@@ -1,5 +1,6 @@
 
 .news {
+  border-radius: 5px;
   width: 833px;
   height: 150px;
   background-size: 100%;
@@ -7,15 +8,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 5px 5px 5px rgb(0, 0, 0, 30%);
 }
 
 .image {
-  width: 225px;
+  border-radius: 5px 0 0 5px;
+  width: 333px;
   height: 150px;
 }
 
 .newsInfo {
-  width: 458px;
+  border-radius: 0 5px 5px 0;
+  width: 500px;
   height: 150px;
   display: flex;
   flex-direction: column;

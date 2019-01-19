@@ -51,13 +51,12 @@ class Header extends Component {
       urlToRequest += withKeyWord;
     }
     if (this.state.dateRange.length) {
-      console.log("request url: ", urlToRequest);
       urlToRequest += withDateData;
     }
+    this.props.setCurrentRequest(urlToRequest);
     return fetch(urlToRequest)
     .then(res => res.json())
     .then(data => {
-      console.log('serarch: ', data);
 
       return data.articles;
     })
@@ -79,7 +78,6 @@ class Header extends Component {
 
   _selectSource(ev) {
     const selectedSource = ev.target;
-    console.log('id: ', selectedSource.id);
 
     if (!this.state.selectedSources.includes(selectedSource.innerText) && this.state.selectedSources.length < 20) {
       this.setState((state) => {

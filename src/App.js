@@ -9,8 +9,30 @@ class App extends Component {
     super(props);
     this.state = {
       newsList: [],
-      listType: true
+      listType: true,
+      currentRequest: "",
+      currentPage: 2
     };
+  }
+
+  _callExtraSearchApi() {
+    let urlToRequest = `${this.currentRequest}&page=${this.currentPage}`;
+
+    return fetch(urlToRequest)
+    .then(res => res.json())
+    .then(data => {
+      console.log("data.articles: ", data.articles)
+      return data.articles;
+    })
+    .catch(err => console.log(err));
+  }
+
+  _setCurrentRequest(url) {
+    this.setState(state => {
+      return {
+        currentRequest: url
+      }
+    })
   }
 
   // async componentDidMount() {
@@ -73,7 +95,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header deliverNewsList={this._deliverNewsList.bind(this)}/>
+        <Header deliverNewsList={this._deliverNewsList.bind(this)}
+        setCurrentRequest={this._setCurrentRequest.bind(this)}/>
         <div className="main">
           <div className="infoOfMain">
             <div className="mainTitle">
