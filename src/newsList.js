@@ -9,8 +9,8 @@ class NewsList extends Component {
 
   _renderNewsList() {
     console.log("rendering newsList...")
-    console.log("this.props.newsList: ", this.props.newsList)
-    return this.props.newsList.map((news, index) => {
+    console.log("this.props.newsList: ", this.props.newsInfo)
+    return this.props.newsInfo.map((news, index) => {
 
       return (
         <div className="news" key={index}>
@@ -19,6 +19,7 @@ class NewsList extends Component {
             <div className="title">{news.title}</div>
             <div className="detail">{news.author}</div>
             <div className="detail">{news.publishedAt}</div>
+            <div className="detail">{news.description}</div>
             <div className="detail">{news.source.name}</div>
           </div>
         </div>
@@ -27,10 +28,12 @@ class NewsList extends Component {
   }
 
   render () {
+    console.log("this.props.newsList : ", this.props.newsInfo);
+    // console.log("this.props.newsList.length: ", this.props.newsList.length);
     return (
       <div className="newsListWrapper">
         {
-          this.props.newsList.length ? this._renderNewsList() : "loading..."
+          this.props.newsInfo && this.props.newsInfo.length ? this._renderNewsList() : "loading..."
         }
       </div>
     )

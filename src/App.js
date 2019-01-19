@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import Header from './header.js'
 import NewsList from './newsList.js'
+import NewsCard from './newsCard.js'
 import './App.css';
 
 class App extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      newsList: []
+      newsList: [],
+      listType: true
     };
   }
 
@@ -50,18 +52,43 @@ class App extends Component {
   // }
 
   _deliverNewsList(newsList) {
-    debugger;
     console.log('deliverinig...')
     this.setState(() => {
       return { newsList: newsList }
     })
   }
 
+  _toggleNewsType() {
+    if (this.state.listType) {
+      this.setState(state => {
+        return { listType: false }
+      });
+    } else {
+      this.setState(state => {
+        return { listType: true }
+      });
+    }
+  }
+
   render() {
     return (
       <div className="App">
         <Header deliverNewsList={this._deliverNewsList.bind(this)}/>
-        <NewsList newsList={this.state.newsList}/>
+        <div className="main">
+          <div className="infoOfMain">
+            <div className="mainTitle">
+              <h1>News you requested</h1>
+            </div>
+            <div className="toggleWrapper">
+              {
+                this.state.listType ?
+                <i className="fas fa-th" onClick={this._toggleNewsType.bind(this)}></i> :
+                <i onClick={this._toggleNewsType.bind(this)} className="fas fa-bars"></i>
+              }
+            </div>
+          </div>
+          {this.state.listType ? <NewsList newsInfo={this.state.newsList}/> : <NewsCard newsInfo={this.state.newsList} />}
+        </div>
       </div>
     );
   }

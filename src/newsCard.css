@@ -1,0 +1,127 @@
+
+.cardNews {
+  width: 293px;
+  height: 270px;
+  background-size: 100%;
+  background-color: white;
+  margin: 20px 20px 20px 20px;
+  display: flex;
+  color: #464E54;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.cardImage {
+  margin: 15px 0 5px 0;
+  width: 263px;
+  height: 162px;
+}
+
+.cardNewsInfo {
+  width: 293px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: white;
+}
+
+.cardTitle {
+  font-size: 15px;
+  text-align: left;
+  margin: 5px 0 5px 10px;
+
+}
+
+.cardDetail {
+  font-size: 10px;
+  margin: 2px 0 2px 10px;
+  text-align: left;
+}
+
+.cardNewsListWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.modalBackground {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  background-color: rgb(0, 0, 0, 80%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalWrapper {
+  position: relative;
+  width: 700px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 2px;
+}
+
+.modalTitle {
+  top: 20px;
+  left: 0;
+  color: #464E54;
+  font-size: 30px;
+  text-align: left;
+}
+
+
+
+.modalWrapper img {
+  width: 700px;
+  height: 340px;
+}
+
+.publishDate {
+  font-size: 10px;
+  width: 100%;
+  text-align: left;
+  margin: 10px 0 0 0;
+  /* padding: 0 0 0 20px; */
+}
+
+.modalDescription {
+  font-size: 10px;
+  width: 100%;
+  text-align: left;
+}
+
+.modalContent {
+  font-size: 20px;
+  width: 100%;
+  text-align: left;
+  margin: 10px 0 10px 0;
+}
+
+.modalLink {
+  margin: 20px 0 0 0;
+  width: 100%;
+  text-align: right;
+}
+
+.modalLink a {
+  background-color: #464E54;
+  border-radius: 10px;
+  color: white;
+  padding: 5px 10px;
+  text-decoration: none;
+}
+
+.modalSourceAuthorWrapper {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.modalAuthor {
+  margin: 0 0 0 15px;
+}

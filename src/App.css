@@ -18,15 +18,38 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.main {
+  color: #464E54;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.infoOfMain {
+  display: flex;
+  justify-content: flex-start;
+
+}
+
+.mainTitle {
+  width: 470px;
+  height: 91px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.mainTitle h1 {
+  font-size: 23px;
+}
+
+.toggleWrapper {
+  width: 470px;
+  height: 91px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }

@@ -59,11 +59,13 @@
   border: none;
   border-bottom: solid 0.5px #EAEAEA;
   color: #EAEAEA;
+  outline: none;
 }
 
 .searchBar i {
   color: #EAEAEA;
   font-size: 13px;
+  margin-right: 10px;
 }
 
 .categoryWrapper {
@@ -72,11 +74,11 @@
   justify-content: flex-start;
   align-items: center;
   background-color: #596166;
-  padding-bottom: 20px;
+  /* padding-bottom: 20px; */
 }
 
 .category {
-  margin: 15px 0 0 0;
+  /* margin: 15px 0 0 0; */
   width: 917px;
   display: flex;
   flex-wrap: wrap;
@@ -92,4 +94,50 @@
   line-height: 12px;
   vertical-align: baseline;
   margin-top: 5px;
+}
+
+.selectedFilter {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.selectedDate {
+  width: 917px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.selectedSources {
+  width: 917px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 0 15px 0;
+  flex-wrap: wrap;
+}
+
+.filterName {
+  color: #EAEAEA;
+  font-weight: bold;
+}
+
+.selectedSource {
+  margin: 0 5px 0 5px;
+  background-color: #EAEAEA;
+  color: #464E54;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 5px 10px;
+  font-size: 11px;
+  line-height: 12px;
+  vertical-align: baseline;
+  margin-top: 5px;
+}
+
+.selectedSource i {
+  margin: 0 0 0 5px;
 }
