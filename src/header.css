@@ -96,7 +96,6 @@
 }
 
 .category {
-  /* margin: 15px 0 0 0; */
   width: 917px;
   display: flex;
   flex-wrap: wrap;
@@ -129,10 +128,8 @@
   to{
     height: 265px;
     animation-play-state: paused;
-    /* padding: 0 0 20px 0; */
   }
 }
-
 
 .source {
   margin: 0 5px 0 5px;
