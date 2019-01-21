@@ -209,7 +209,7 @@ class App extends Component {
           </div>
           {this.state.isLoading ? <Loading/> : ""}
           {this.state.blankMessage ? <div className="alertMessage">Please, select any source/date or write Keyword on Search box :)</div> : ""}
-          {this.state.emptyDataMessage ? <div className="alertMessage">there's no articles with this Keyword :(</div> : ""}
+          {this.state.emptyDataMessage ? <div className="alertMessage">no articles with this Keyword :(</div> : ""}
           {
             this.state.listType ? <NewsList newsInfo={this.state.isHeadLineOn ? this.state.topHeadLine : this.state.newsList}/> :
             <NewsCard newsInfo={this.state.isHeadLineOn ? this.state.topHeadLine : this.state.newsList}/>
