@@ -1,0 +1,17 @@
+
+.icon-loading {
+  margin-top: 20px;
+  width: 2em;
+  height: 2em;
+}
+
+.min-h100 { min-height: 100%; }
+.center { text-align: center; }
+.table {
+  display: table;
+  width: 100%;
+}
+.table-cell {
+  display: table-cell;
+  vertical-align: middle;
+}

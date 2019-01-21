@@ -2,22 +2,6 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
 .main {
   color: #464E54;
   width: 100%;
@@ -52,4 +36,18 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+
+.topBtn {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  font-size: 40px;
+  color: white;
+  border-radius: 50%;
+  box-shadow: 4px 4px 15px rgb(0, 0, 0, 20%);
+}
+
+.hide {
+  display: none;
 }

@@ -12,21 +12,21 @@ class NewsList extends Component {
   }
 
   _renderNewsList() {
-    return this.props.newsInfo.map((news, index) => {
-      return (
-        <div className="news" key={index} id={`${index}`}
-        onClick={this._changeStateModal.bind(this)}>
-          <img className="image" src={news.urlToImage} alt=""></img>
-          <div className="newsInfo">
-            <div className="title">{news.title}</div>
-            <div className="detail">{news.author}</div>
-            <div className="detail">{news.publishedAt}</div>
-            <div className="detail">{news.description}</div>
-            <div className="detail">{news.source.name}</div>
-          </div>
+    return this.props.newsInfo.map((news, index) =>
+      <div className="news" key={index} id={`${index}`} onClick={this._changeStateModal.bind(this)}>
+        {news.urlToImage ?
+          <img className="image" src={news.urlToImage} alt=""></img> :
+          <img className="image" src="https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i6p6C_Zrbfhc/v0/1000x-1.jpg" alt=""></img>
+        }
+        <div className="newsInfo">
+          <div className="title">{news.title}</div>
+          <div className="detail">{news.author}</div>
+          <div className="detail">{news.publishedAt}</div>
+          <div className="detail">{news.description}</div>
+          <div className="detail">{news.source.name}</div>
         </div>
-      )
-    })
+      </div>
+    );
   }
 
   _changeStateModal(ev) {
@@ -34,12 +34,10 @@ class NewsList extends Component {
     const body = document.getElementById('body');
 
     body.classList.add('fixScroll');
-    this.setState(state => {
-      return {
-        modal: true,
-        modalInfo: this.props.newsInfo[currentTargetInfo]
-      }
-    });
+    this.setState(state => ({
+      modal: true,
+      modalInfo: this.props.newsInfo[currentTargetInfo]
+    }));
   }
 
   _deleteModal(ev) {
@@ -49,16 +47,16 @@ class NewsList extends Component {
       body.classList.remove('fixScroll');
       this.setState(state => {
         return {modal: false};
-      })
+      });
     }
   }
 
-  _renderModal(ev) {
+  _renderModal() {
     const thisInfo = this.state.modalInfo;
 
     return (
       <Modal deleteModal={this._deleteModal.bind(this)} thisInfo={thisInfo} />
-    )
+    );
   }
 
   render () {
@@ -69,7 +67,7 @@ class NewsList extends Component {
         }
         {this.state.modal ? this._renderModal() : ""}
       </div>
-    )
+    );
   }
 }
 

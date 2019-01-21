@@ -8,7 +8,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 5px 5px 5px rgb(0, 0, 0, 30%);
+  box-shadow: 4px 4px 15px rgb(0, 0, 0, 20%);
+  cursor: pointer;
 }
 
 .image {
@@ -26,6 +27,7 @@
   justify-content: flex-start;
   align-items: flex-start;
   background-color: white;
+  padding: 0 10px 0 0;
 }
 
 .title {

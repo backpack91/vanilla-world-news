@@ -16,16 +16,33 @@
 }
 
 .logoWrapper {
+  cursor: pointer;
   width: 136px;
   heith: 84px;
 }
 
 .logo {
+  font-weight: lighter;
+  font-family: 'Thasadith', sans-serif;
   width: 84px;
   height: 84px;
   border-radius: 50%;
   background-color: #FF3333;
   color: white;
+  position: relative;
+}
+
+.logo :nth-child(1) {
+  font-weight: 100;
+  position: absolute;
+  top: 27px;
+  left: 10px;
+}
+
+.logo :nth-child(2) {
+  position: absolute;
+  top: 39px;
+  left: 37px;
 }
 
 .nav {
@@ -41,9 +58,11 @@
 
 .navItem {
   margin: 0 0 0 10px;
+  cursor: pointer;
 }
 
 .searchBar {
+  border-top: solid 1px #D8D8D8;
   width: 100%;
   height: 67px;
   background-color: #596166;
@@ -74,7 +93,6 @@
   justify-content: flex-start;
   align-items: center;
   background-color: #596166;
-  /* padding-bottom: 20px; */
 }
 
 .category {
@@ -82,7 +100,39 @@
   width: 917px;
   display: flex;
   flex-wrap: wrap;
+  overflow: hidden;
 }
+
+.dateRangeTab {
+  width: 917px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+
+@keyframes slideDown {
+  from {
+    height: 0px;
+  }
+  to{
+    height: 405px;
+    animation-play-state: paused;
+    padding: 0 0 20px 0;
+  }
+}
+
+@keyframes slideDownCalander {
+  from {
+    height: 0px;
+  }
+  to{
+    height: 265px;
+    animation-play-state: paused;
+    /* padding: 0 0 20px 0; */
+  }
+}
+
 
 .source {
   margin: 0 5px 0 5px;
@@ -94,6 +144,21 @@
   line-height: 12px;
   vertical-align: baseline;
   margin-top: 5px;
+  cursor: pointer;
+}
+
+.source:hover {
+  transition: all 0.5s ease-out;
+  margin: 0 5px 0 5px;
+  background-color: #B71C1C;
+  color: #EAEAEA;
+  border-radius: 10px;
+  padding: 5px 10px;
+  font-size: 11px;
+  line-height: 12px;
+  vertical-align: baseline;
+  margin-top: 5px;
+  cursor: pointer;
 }
 
 .selectedFilter {
@@ -109,6 +174,7 @@
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
+  cursor: pointer;
 }
 
 .selectedSources {
@@ -122,7 +188,7 @@
 
 .filterName {
   color: #EAEAEA;
-  font-weight: bold;
+  font-weight: normal;
 }
 
 .selectedSource {
@@ -136,8 +202,13 @@
   line-height: 12px;
   vertical-align: baseline;
   margin-top: 5px;
+  cursor: pointer;
 }
 
 .selectedSource i {
   margin: 0 0 0 5px;
+}
+
+.alertMessage {
+  margin: 130px 0 0 0;
 }

@@ -1,27 +1,32 @@
 import React, { Component } from 'react';
-import ReactDom from 'react-dom';
 import './modal.css';
-
-const modalRoot = document.getElementById('modalRoot');
 
 class Modal extends Component {
   constructor(props) {
     super(props);
-}
+  }
 
-  // componentDidMount() {
-  //   modalRoot.appendChild(this.el);
-  // }
-  //
-  // componentWillUnmount() {
-  //   modalRoot.removeChild(this.el);
-  // }
+  componentDidMount() {
+    const body = document.getElementById('body');
+
+    body.classList.add('fixScroll');
+  }
+
+  componentWillUnmount() {
+    const body = document.getElementById('body');
+
+    body.classList.remove('fixScroll');
+  }
 
   render () {
     return (
       <div className="modalBackground" onClick={this.props.deleteModal} id="modalBackground">
         <div className="modalWrapper">
-          <img src={this.props.thisInfo.urlToImage} alt="alt"/>
+          {
+            this.props.thisInfo.urlToImage ?
+            <img src={this.props.thisInfo.urlToImage} alt="alt"/> :
+            <img className="cardImage" src="https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i6p6C_Zrbfhc/v0/1000x-1.jpg" alt=""></img>
+          }
           <div className="modalInfo">
             <div className="modalTitle">{this.props.thisInfo.title}</div>
             <div className="publishDate">{this.props.thisInfo.publishedAt}</div>

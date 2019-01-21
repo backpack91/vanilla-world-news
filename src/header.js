@@ -7,18 +7,17 @@ class Header extends Component {
     super(props);
     this.state = {
       SourceTab: false,
-      selectedSources: ["T3n"],
-      selectedSourcesId: ["t3n"],
+      selectedSources: [],
+      selectedSourcesId: [],
       dateSetterTab: false,
       dateRange: [],
-      keyWord: ""
+      keyWord: "",
     };
   }
 
   async componentDidMount() {
     const sources = await this._callSourceApi();
-    console.log('this.state.selectedSources: ', this.state.selectedSources)
-    console.log('this.state.selectedSourcesId: ', this.state.selectedSourcesId)
+
     this.setState({
       sources,
     });
@@ -28,8 +27,6 @@ class Header extends Component {
     return fetch("https://newsapi.org/v2/sources?apiKey=28004306a1cf423dac8b895d774b3842")
     .then(res => res.json())
     .then(data => {
-      console.log('source: ', data);
-
       return data.sources;
     })
     .catch(err => {
@@ -39,10 +36,10 @@ class Header extends Component {
 
   _callSearchApi() {
     const url = 'https://newsapi.org/v2/everything?apiKey=28004306a1cf423dac8b895d774b3842&sortBy=popularity&pageSize=30';
-    var withDateData = `&from=${this.state.dateRange[0]}&to=${this.state.dateRange[1]}`;
-    var urlToRequest = url;
-    var withKeyWord = `&q=${this.state.keyWord}`;
-    var withSources = `&sources=${this.state.selectedSourcesId.join(',')}`;
+    let withDateData = `&from=${this.state.dateRange[0]}&to=${this.state.dateRange[1]}`;
+    let urlToRequest = url;
+    let withKeyWord = `&q=${this.state.keyWord}`;
+    let withSources = `&sources=${this.state.selectedSourcesId.join(',')}`;
 
     if (this.state.selectedSourcesId.length) {
       urlToRequest += withSources;
@@ -54,25 +51,39 @@ class Header extends Component {
       urlToRequest += withDateData;
     }
     this.props.setCurrentRequest(urlToRequest);
+
     return fetch(urlToRequest)
     .then(res => res.json())
     .then(data => {
+      this.props.makeStateLoading(false);
+      this.props.changeHeadLineState(false);
+      if (!data.articles.length) {
+        this.props.changeEmptyDataState(true);
+      } else {
+        this.props.changeEmptyDataState(false);
+      }
+      this.props.changeBlankMessageState(false);
 
       return data.articles;
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      this.props.changeBlankMessageState(true);
+      this.props.makeStateLoading(false);
+      this.props.changeHeadLineState(false);
+      console.log(err);
+    });
   }
 
   _openSourceTab() {
     if (this.state.SourceTab) {
       this.setState({
         SourceTab: false
-      })
+      });
     } else {
       this.setState({
         SourceTab: true,
         dateSetterTab: false
-      })
+      });
     }
   }
 
@@ -80,48 +91,51 @@ class Header extends Component {
     const selectedSource = ev.target;
 
     if (!this.state.selectedSources.includes(selectedSource.innerText) && this.state.selectedSources.length < 20) {
-      this.setState((state) => {
-        return {
-          selectedSources: state.selectedSources.concat(selectedSource.innerText),
-          selectedSourcesId: state.selectedSourcesId.concat(selectedSource.id)
-        };
-      });
+      this.setState((state) => ({
+        selectedSources: state.selectedSources.concat(selectedSource.innerText),
+        selectedSourcesId: state.selectedSourcesId.concat(selectedSource.id)
+      }));
     }
   }
 
   _renderSources() {
-    console.log('_renderSources: ', this.state);
     const sources = this.state.sources.map(source => {
-      return <div onClick={this._selectSource.bind(this)} id={source.id} className="source" key={source.id}>{source.name}</div>;
+      return (
+        <div
+          onClick={this._selectSource.bind(this)}
+          id={source.id}
+          className="source"
+          key={source.id}
+          style={this.state.selectedSourcesId.includes(source.id) ? {backgroundColor: "#EAEAEA", color: "#464E54"} : {}}
+        >
+          {source.name}
+        </div>
+      );
     });
 
     return sources;
   }
 
   async _onSearch(ev) {
-      const keyValue = ev.target.value;
-    if (ev.keyCode === 13) {
-      console.log('isEnterWorking')
-      const filteredSearch = await this._callSearchApi(ev.target.value);
-      console.log('filteredSearch: ', filteredSearch);
-      console.log('value: ', keyValue);
-      this.props.deliverNewsList(filteredSearch);
+    const keyValue = ev.target.value;
 
-      this.setState(state => {
-        return {
-          keyWord: keyValue,
-          SourceTab: false,
-          dateSetterTab: false
-        }
-      })
+    if (ev.keyCode === 13) {
+      this.props.makeStateLoading(true);
+      const filteredSearch = await this._callSearchApi(ev.target.value);
+      filteredSearch ? this.props.deliverNewsList(filteredSearch) : this.props.deliverNewsList([]);
+
+      this.setState(state => ({
+        keyWord: keyValue,
+        SourceTab: false,
+        dateSetterTab: false
+      }));
     }
   }
 
   _onKeyWordChange(ev) {
-    console.log(ev.target.value);
     this.setState({
       keyWord: ev.target.value
-    })
+    });
   }
 
   _deleteSelectedSource(ev) {
@@ -130,70 +144,103 @@ class Header extends Component {
 
     this.setState(state => {
       const indexOfSourceTobeRemoved = state.selectedSources.indexOf(sourceName);
-      const modifiedSources = state.selectedSources.slice()
-      modifiedSources.splice(indexOfSourceTobeRemoved, 1);
+      const modifiedSources = state.selectedSources.slice();
       const indexOfSourceIdTobeRemoved = state.selectedSources.indexOf(sourceId);
-      const modifiedSourcesId = state.selectedSourcesId.slice()
+      const modifiedSourcesId = state.selectedSourcesId.slice();
+
+      modifiedSources.splice(indexOfSourceTobeRemoved, 1);
       modifiedSourcesId.splice(indexOfSourceIdTobeRemoved, 1);
 
       return {
         selectedSources: modifiedSources,
         selectedSourcesId: modifiedSourcesId
       };
-    })
+    });
   }
 
   _writeSelectedSource() {
-    const title = [<div className="filterName" key="filterName">Publishing Company:</div>];
-
-    return title.concat(this.state.selectedSources.map(sourceName => {
-      return <div className="selectedSource" key={sourceName}>{ sourceName }<i className="fas fa-times" onClick={this._deleteSelectedSource.bind(this)}></i></div>
-    }));
+    return (
+      [<div className="filterName" key="filterName">Publishing Company:</div>]
+      .concat(this.state.selectedSources.map(sourceName => {
+        return (
+          <div className="selectedSource" key={sourceName}>
+            { sourceName }
+            <i className="fas fa-times" onClick={this._deleteSelectedSource.bind(this)}></i>
+          </div>
+        );
+      }))
+    );
   }
 
   _openDateSetterTab() {
     if (this.state.dateSetterTab) {
       this.setState({
         dateSetterTab: false
-      })
+      });
     } else {
       this.setState({
         dateSetterTab: true,
         SourceTab: false
-      })
+      });
     }
   }
 
   _getDateRange(date) {
-    console.log("gotten Date: ", date);
     this.setState({
       dateRange: date
     });
   }
 
   _writeSelectedDateRange() {
-    console.log("writeSelectedDateRange working...")
-    const title = [<div className="filterName" key="dateTitle">Selected date range:</div>];
-
-    return title.concat([
-      <div className="selectedSource" key="date">{ `from ${this.state.dateRange[0]} to ${this.state.dateRange[1]}`  }<i className="fas fa-times" onClick={this._deleteSelectedDate.bind(this)}></i></div>
-    ])
+    return (
+      [<div className="filterName" key="dateTitle">Selected date range:</div>]
+      .concat([
+        <div className="selectedSource" key="date">
+          {`from ${this.state.dateRange[0]} to ${this.state.dateRange[1]}`}
+          <i className="fas fa-times" onClick={this._deleteSelectedDate.bind(this)}></i>
+        </div>
+      ])
+    );
   }
 
   _deleteSelectedDate(ev) {
-    console.log("ev.target.parentNode: ", ev.target.parentNode);
-    this.setState(state => {
-      return { dateRange: [] }
-    });
+    this.setState(state => (
+      {dateRange: []}
+    ));
+  }
+
+  _goToHeadLine() {
+    this.props.changeHeadLineState(true);
   }
 
   render() {
+    const categorySlideDown = {
+      animationDuration: '0.8s',
+      animationName: 'slideDown',
+      animationDirection: 'alternate',
+      animationFillMode: 'forwards'
+    };
+
+    const dateSetterSlideDown = {
+      animationDuration: '0.5s',
+      animationName: 'slideDownCalander',
+      animationDirection: 'alternate',
+      animationFillMode: 'forwards'
+    };
+
     return (
       <React.Fragment>
         <div className="headerWrapper">
           <div className="header">
             <div className="logoWrapper">
-              <div className="logo">vanilla News</div>
+              <div className="logo" onClick={this._goToHeadLine.bind(this)}>
+                <div>
+                  Vanilla
+                </div>
+                <div>
+                  News
+                </div>
+              </div>
             </div>
             <div className="nav">
               <div>filter </div>
@@ -205,7 +252,8 @@ class Header extends Component {
           </div>
         </div>
         <div className="searchBar">
-          <i className="fas fa-search"></i><input type="text" onChange={this._onKeyWordChange.bind(this)} onKeyDown={this._onSearch.bind(this)}/>
+          <i className="fas fa-search"></i>
+          <input type="text" onChange={this._onKeyWordChange.bind(this)} onKeyDown={this._onSearch.bind(this)}/>
         </div>
         <div className="categoryWrapper">
           <div className="selectedFilter">
@@ -216,13 +264,15 @@ class Header extends Component {
               { this.state.selectedSources.length ? this._writeSelectedSource() : ""}
             </div>
           </div>
-          { this.state.dateSetterTab ? <DateSetter getDateRange={this._getDateRange.bind(this)} /> : "" }
-          <div className="category">
+          <div className="dateRangeTab" style={this.state.dateSetterTab ? dateSetterSlideDown : {}}>
+          { this.state.dateSetterTab ? <DateSetter getDateRange={this._getDateRange.bind(this)}/> : "" }
+          </div>
+          <div className="category" style={this.state.SourceTab ? categorySlideDown : {}}>
             { this.state.sources && this.state.SourceTab ? this._renderSources() : "" }
           </div>
         </div>
       </React.Fragment>
-    )
+    );
   }
 }
 

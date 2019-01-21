@@ -6,12 +6,11 @@ class DateSetter extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: new Date(),
+      date: new Date()
     };
   }
 
   onChange (date) {
-    console.log("date: ", date);
     const convertedDateFrom = `${date[0].getYear() + 1900}-${date[0].getMonth() + 1}-${date[0].getDate()}`;
     const convertedDateTo = `${date[1].getYear() + 1900}-${date[1].getMonth() + 1}-${date[1].getDate()}`;
     const convertedDate = [convertedDateFrom, convertedDateTo];
